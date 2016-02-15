@@ -1,0 +1,19 @@
+{
+  "name": "Coolframework",
+  "description": "The best framework for years like this",
+  "keywords": ["", "calendar"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Marcos Segovia",
+      "email": "velozmarkdrea@gmail.com"
+    }
+  ],
+  "type": "project",
+  "require": {
+    "php": ">=5.3.3"
+  },
+  "autoload": {
+    "psr-4": { "Coolframework\\": "src/Coolframework" }
+  }
+}
