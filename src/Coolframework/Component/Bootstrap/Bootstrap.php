@@ -2,6 +2,9 @@
 
 namespace Coolframework\Component\Bootstrap;
 
+use Coolframework\Component\Routing\Routing;
+use Symfony\Component\Yaml\Parser;
+
 class Bootstrap
 {
 	public function __construct()
@@ -9,8 +12,9 @@ class Bootstrap
 		echo "Hello, I'm the Coolframework";
 	}
 
-	public function setRoutingDirectory($routing_to_config_file)
+	public function configRouting($routing_to_config_file)
 	{
-
+		$routing = new Routing();
+		$routing->setRoutingDirectory($routing_to_config_file);
 	}
 }
