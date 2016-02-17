@@ -27,6 +27,6 @@ class Bootstrap
 
 		$controller_to_instantiate = $this->routing->getController($controller_to_use);
 		$current_controller        = new $controller_to_instantiate();
-		$current_controller->$action_to_execute();
+		return $current_controller->$action_to_execute();
 	}
 }
