@@ -3,10 +3,12 @@
 namespace Coolframework\Component\Bootstrap;
 
 use Coolframework\Component\Request\Request;
+use Coolframework\Component\Routing\Route;
 use Coolframework\Component\Routing\Routing;
 
 class Bootstrap
 {
+	/** @var  Routing */
 	private $routing;
 
 	public function __construct()
@@ -21,12 +23,13 @@ class Bootstrap
 
 	public function execute(Request $a_request)
 	{
+		/** @var Route $route */
+		$route                     = $this->routing->retrieveRoute($a_request);
+		$controller_to_instantiate = $route->associateController();
+		$action_to_execute         = $route->associateAction();
 
-		$controller_to_use = $a_request->params(1);
-		$action_to_execute = $a_request->params(2);
+		$current_controller = new $controller_to_instantiate();
 
-		$controller_to_instantiate = $this->routing->getController($controller_to_use);
-		$current_controller        = new $controller_to_instantiate();
 		return $current_controller->$action_to_execute();
 	}
 }

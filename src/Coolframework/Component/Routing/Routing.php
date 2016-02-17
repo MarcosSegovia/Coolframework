@@ -2,6 +2,7 @@
 
 namespace Coolframework\Component\Routing;
 
+use Coolframework\Component\Request\Request;
 use Symfony\Component\Yaml\Parser;
 
 class Routing
@@ -24,12 +25,20 @@ class Routing
 
 		foreach ($routing_file_content as $key => $url)
 		{
-			$this->routes[$key] = Route::register($key, $url[0]);
+			if(array_key_exists(1, $url))
+			{
+				$this->routes[$key] = Route::register($key, $url[0], $url[1]);
+			}
+			else
+			{
+				$this->routes[$key] = Route::simpleRegister($key, $url[0]);
+			}
 		}
 	}
 
-	public function getController($index)
+	public function retrieveRoute(Request $a_request)
 	{
-		return $this->routes[$index]->associateController();
+		$controller_index_to_use = $a_request->params(1);
+		return $this->routes[$controller_index_to_use];
 	}
 }
