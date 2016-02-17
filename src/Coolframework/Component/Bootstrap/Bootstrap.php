@@ -2,6 +2,7 @@
 
 namespace Coolframework\Component\Bootstrap;
 
+use Coolframework\Component\Request\Request;
 use Coolframework\Component\Routing\Routing;
 
 class Bootstrap
@@ -18,11 +19,14 @@ class Bootstrap
 		$this->routing->setRoutingDirectory($routing_to_config_file);
 	}
 
-	public function execute($actual_url)
+	public function execute(Request $a_request)
 	{
-		$controller_to_instantiate = $this->routing->getController($actual_url);
-		$action_to_execute = $this->routing->getAction($actual_url);
-		$current_controller = new $controller_to_instantiate();
+
+		$controller_to_use = $a_request->params(1);
+		$action_to_execute = $a_request->params(2);
+
+		$controller_to_instantiate = $this->routing->getController($controller_to_use);
+		$current_controller        = new $controller_to_instantiate();
 		$current_controller->$action_to_execute();
 	}
 }

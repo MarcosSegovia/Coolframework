@@ -24,17 +24,12 @@ class Routing
 
 		foreach ($routing_file_content as $key => $url)
 		{
-			$this->routes[$key] = Route::register($key, $url[0], $url[1]);
+			$this->routes[$key] = Route::register($key, $url[0]);
 		}
 	}
 
 	public function getController($index)
 	{
 		return $this->routes[$index]->associateController();
-	}
-
-	public function getAction($index)
-	{
-		return $this->routes[$index]->associateAction();
 	}
 }
