@@ -11,6 +11,11 @@ class Request
 		$this->full_raw_url = $a_full_raw_url;
 	}
 
+	public static function create()
+	{
+		return new self($_SERVER['REQUEST_URI']);
+	}
+
 	public function fullRawUrl()
 	{
 		return $this->full_raw_url;
