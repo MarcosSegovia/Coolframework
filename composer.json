@@ -9,12 +9,22 @@
       "email": "velozmarkdrea@gmail.com"
     }
   ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/smarty-php/smarty"
+    }
+  ],
   "type": "project",
   "require": {
     "php": ">=5.3.3",
-    "symfony/yaml" : ">=3.0"
+    "symfony/yaml": ">=3.0",
+    "twig/twig": "~1.0",
+    "smarty/smarty": "~3.1"
   },
   "autoload": {
-    "psr-4": { "Coolframework\\": "src/Coolframework" }
+    "psr-4": {
+      "Coolframework\\": "src/Coolframework"
+    }
   }
 }
