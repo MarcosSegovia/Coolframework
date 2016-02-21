@@ -2,6 +2,10 @@
 
 namespace Coolframework\Component\Templating;
 
+use Smarty;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
+
 class Templating
 {
 	private $template_engine;
@@ -31,6 +35,12 @@ class Templating
 
 	private function configTwigTemplateEngine()
 	{
+		$loader = new Twig_Loader_Filesystem('/path/to/templates');
+		$twig = new Twig_Environment($loader, array(
+			'cache' => '/path/to/compilation_cache',
+		));
 
+		return $twig;
 	}
+
 }
