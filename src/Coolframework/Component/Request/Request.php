@@ -4,26 +4,36 @@ namespace Coolframework\Component\Request;
 
 class Request
 {
-	private $full_raw_url;
+	private $server;
+	private $session;
+	private $cookies;
+	private $get;
+	private $post;
 
-	public function __construct($a_full_raw_url)
+	public function __construct(
+		$a_server_info,
+		$a_session_info,
+		$some_cookies_info,
+		$a_get_info,
+		$a_post_info
+	)
 	{
-		$this->full_raw_url = $a_full_raw_url;
+		$this->server = $a_server_info;
+		$this->session = $a_session_info;
+		$this->cookies = $some_cookies_info;
+		$this->get = $a_get_info;
+		$this->post = $a_post_info;
 	}
 
 	public static function create()
 	{
-		return new self($_SERVER['REQUEST_URI']);
+		session_start();
+		return new self($_SERVER, $_SESSION, $_COOKIE, $_GET, $_POST);
 	}
 
-	public function fullRawUrl()
+	public function urlParams($index_from_array)
 	{
-		return $this->full_raw_url;
-	}
-
-	public function params($index_from_array)
-	{
-		$url_in_array = explode("/", parse_url($this->full_raw_url)['path']);
+		$url_in_array = explode("/", parse_url($this->server['REQUEST_URI'])['path']);
 		if (array_key_exists($index_from_array, $url_in_array))
 		{
 			return $url_in_array[ $index_from_array ];

@@ -38,7 +38,7 @@ class Routing
 
 	public function retrieveRoute(Request $a_request)
 	{
-		$controller_index_to_use = $a_request->params(1);
+		$controller_index_to_use = $a_request->urlParams(1);
 		return $this->routes[$controller_index_to_use];
 	}
 }
