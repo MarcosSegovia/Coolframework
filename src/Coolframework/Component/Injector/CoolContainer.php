@@ -4,6 +4,7 @@ namespace Coolframework\Component\Injector;
 
 use Coolframework\Component\Injector\Exception\ServiceNotFoundException;
 use ReflectionClass;
+use Symfony\Component\Yaml\Parser;
 
 class CoolContainer
 {
@@ -11,7 +12,7 @@ class CoolContainer
 	private $service_store;
 
 	public function __construct(
-		$yml_parser,
+		Parser $yml_parser,
 		$path_to_services_config_file
 	)
 	{
@@ -58,6 +59,23 @@ class CoolContainer
 				}
 				else
 				{
+					$first_character = substr($argument, 0, 1);
+					if ('[' === $first_character)
+					{
+						$multiple_statements = str_replace("[", "", $argument);
+						$multiple_statements = str_replace("]", "", $multiple_statements);
+						$multiple_statements = str_replace("'", "", $multiple_statements);
+						$multiple_statements = str_replace(" ", "", $multiple_statements);
+						$multiple_statements = explode(",", $multiple_statements);
+						$argument            = [];
+
+						foreach ($multiple_statements as $single_statement)
+						{
+							$array_with_key_value = explode("=>", $single_statement);
+
+							$argument[ $array_with_key_value[0] ] = $array_with_key_value[1];
+						}
+					}
 					$services_arguments[] = $argument;
 				}
 
