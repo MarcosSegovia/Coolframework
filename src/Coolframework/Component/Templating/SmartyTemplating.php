@@ -8,9 +8,9 @@ class SmartyTemplating implements Templating
 {
 	private $smarty;
 
-	public function __construct()
+	public function __construct(Smarty $smarty)
 	{
-		$this->smarty = new Smarty();
+		$this->smarty = $smarty;
 		$this->smarty->setTemplateDir( ROOTPATH . '/web/smarty/templates');
 		$this->smarty->setCompileDir(ROOTPATH . '/web/smarty/templates_c');
 		$this->smarty->setCacheDir(ROOTPATH . '/web/smarty/cache');

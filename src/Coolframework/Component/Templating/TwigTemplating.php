@@ -3,18 +3,14 @@
 namespace Coolframework\Component\Templating;
 
 use Twig_Environment;
-use Twig_Loader_Filesystem;
 
 class TwigTemplating implements Templating
 {
 	private $twig;
 
-	public function __construct()
+	public function __construct(Twig_Environment $twig)
 	{
-		$loader = new Twig_Loader_Filesystem(ROOTPATH . '/web/twig/templates');
-		$this->twig = new Twig_Environment($loader, array(
-			'cache' => ROOTPATH . './web/twig/cache',
-		));
+		$this->twig = $twig;
 	}
 
 	public function render($template_to_render, $array_with_key_value = [])
