@@ -14,14 +14,13 @@ class Routing
 		$this->routes = [];
 	}
 
-	public function setRoutingDirectory($routing_to_config_file)
+	public function setRoutingDirectory($yml_parser, $routing_to_config_file)
 	{
 		if (!file_exists($routing_to_config_file))
 		{
 			throw new RoutingException();
 		}
-		$yaml_parser  = new Parser();
-		$routing_file_content = $yaml_parser->parse(file_get_contents($routing_to_config_file));
+		$routing_file_content = $yml_parser->parse(file_get_contents($routing_to_config_file));
 
 		foreach ($routing_file_content as $key => $url)
 		{
