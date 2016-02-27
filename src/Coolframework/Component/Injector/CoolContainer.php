@@ -19,8 +19,9 @@ class CoolContainer
 		$this->container     = [];
 		$this->service_store = [];
 
-		$service_definitions = $yml_parser->parse(file_get_contents($path_to_services_config_file));
-		foreach ($service_definitions as $service => $content)
+		$production_service_definitions = $yml_parser->parse(file_get_contents($path_to_services_config_file . '/services.yml'));
+		$development_service_definitions = $yml_parser->parse(file_get_contents($path_to_services_config_file . '/services_dev.yml'));
+		foreach ($production_service_definitions as $service => $content)
 		{
 			if (array_key_exists($service, $this->container))
 			{
