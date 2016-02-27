@@ -158,6 +158,10 @@ class Response
 	public function send()
 	{
 		header(sprintf('HTTP/1.0 %s %s', $this->status_code, $this->status_text), true, $this->status_code);
+		foreach($this->headers as $header)
+		{
+			header($header);
+		}
 		$this->content();
 
 		return $this;
