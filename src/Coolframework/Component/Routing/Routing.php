@@ -3,7 +3,7 @@
 namespace Coolframework\Component\Routing;
 
 use Coolframework\Component\Request\Request;
-use Symfony\Component\Yaml\Parser;
+use Coolframework\Component\Routing\Exception\RoutingException;
 
 class Routing
 {
@@ -14,7 +14,10 @@ class Routing
 		$this->routes = [];
 	}
 
-	public function setRoutingDirectory($yml_parser, $routing_to_config_file)
+	public function setRoutingDirectory(
+		$yml_parser,
+		$routing_to_config_file
+	)
 	{
 		if (!file_exists($routing_to_config_file))
 		{
@@ -24,13 +27,13 @@ class Routing
 
 		foreach ($routing_file_content as $key => $url)
 		{
-			if(array_key_exists(1, $url))
+			if (array_key_exists(1, $url))
 			{
-				$this->routes[$key] = Route::register($key, $url[0], $url[1]);
+				$this->routes[ $key ] = Route::register($key, $url[0], $url[1]);
 			}
 			else
 			{
-				$this->routes[$key] = Route::simpleRegister($key, $url[0]);
+				$this->routes[ $key ] = Route::simpleRegister($key, $url[0]);
 			}
 		}
 	}
@@ -38,6 +41,8 @@ class Routing
 	public function retrieveRoute(Request $a_request)
 	{
 		$controller_index_to_use = $a_request->urlParams(1);
-		return $this->routes[$controller_index_to_use];
+
+		return $this->routes[ $controller_index_to_use ];
 	}
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Coolframework\Component\Routing;
+namespace Coolframework\Component\Routing\Exception;
 
 class RoutingException extends \Exception
 {
