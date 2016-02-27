@@ -4,18 +4,20 @@ namespace Coolframework\Component\Routing;
 
 use Coolframework\Component\Request\Request;
 use Coolframework\Component\Routing\Exception\RoutingException;
+use Symfony\Component\Yaml\Parser;
 
 class Routing
 {
 	private $routes;
 
-	public function __construct()
+	public function __construct(Parser $yml_parser, $path_to_config_file)
 	{
 		$this->routes = [];
+		$this->setRoutingDirectory($yml_parser, $path_to_config_file);
 	}
 
-	public function setRoutingDirectory(
-		$yml_parser,
+	private function setRoutingDirectory(
+		Parser $yml_parser,
 		$routing_to_config_file
 	)
 	{

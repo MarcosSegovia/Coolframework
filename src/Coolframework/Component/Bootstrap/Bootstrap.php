@@ -4,7 +4,6 @@ namespace Coolframework\Component\Bootstrap;
 
 use Coolframework\Component\Injector\CoolContainer;
 use Coolframework\Component\Request\Request;
-use Coolframework\Component\Routing\Route;
 use Coolframework\Component\Routing\Routing;
 
 class Bootstrap
@@ -20,11 +19,6 @@ class Bootstrap
 	public function setContainer(CoolContainer $container)
 	{
 		$this->container = $container;
-	}
-
-	public function configRouting($yml_parser, $routing_to_config_file)
-	{
-		$this->routing->setRoutingDirectory($yml_parser, $routing_to_config_file);
 	}
 
 	public function execute(Request $a_request)
