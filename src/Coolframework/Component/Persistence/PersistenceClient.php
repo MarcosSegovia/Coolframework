@@ -10,6 +10,8 @@ interface PersistenceClient
 
 	public function execute();
 
+	public function executeAndRetrieve();
+
 	public function query(
 		$query_to_execute,
 		$array_with_values_to_bind = null
