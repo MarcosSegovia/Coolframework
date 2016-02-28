@@ -13,14 +13,14 @@ class CoolContainer
 
 	public function __construct(
 		Parser $yml_parser,
-		$path_to_services_config_file
+		$path_to_services_config_file,
+		$current_environment = 'DEV'
 	)
 	{
 		$this->container     = [];
 		$this->service_store = [];
 
 		$production_service_definitions = $yml_parser->parse(file_get_contents($path_to_services_config_file . '/services.yml'));
-		$development_service_definitions = $yml_parser->parse(file_get_contents($path_to_services_config_file . '/services_dev.yml'));
 		foreach ($production_service_definitions as $service => $content)
 		{
 			if (array_key_exists($service, $this->container))
@@ -29,6 +29,20 @@ class CoolContainer
 			}
 			$this->container[ $service ] = $content;
 		}
+
+		if($current_environment === 'DEV')
+		{
+			$development_service_definitions = $yml_parser->parse(file_get_contents($path_to_services_config_file . '/services_dev.yml'));
+			foreach($development_service_definitions as $service => $content)
+			{
+				if (array_key_exists($service, $this->container))
+				{
+					continue;
+				}
+				$this->container[ $service ] = $content;
+			}
+		}
+
 	}
 
 	public function getService($a_name_of_the_service)
