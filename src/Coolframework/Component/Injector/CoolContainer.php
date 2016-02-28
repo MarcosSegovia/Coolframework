@@ -2,6 +2,7 @@
 
 namespace Coolframework\Component\Injector;
 
+use Coolframework\Component\Injector\Exception\ServiceNotAvailableToPublicAccessException;
 use Coolframework\Component\Injector\Exception\ServiceNotFoundException;
 use ReflectionClass;
 use Symfony\Component\Yaml\Parser;
@@ -10,6 +11,7 @@ class CoolContainer
 {
 	private $container;
 	private $service_store;
+	private $service_settings;
 
 	public function __construct(
 		Parser $yml_parser,
@@ -19,15 +21,19 @@ class CoolContainer
 	{
 		$this->container     = [];
 		$this->service_store = [];
+		$this->service_settings = [];
 
 		$production_service_definitions = $yml_parser->parse(file_get_contents($path_to_services_config_file . '/services.yml'));
+
 		foreach ($production_service_definitions as $service => $content)
 		{
 			if (array_key_exists($service, $this->container))
 			{
 				continue;
 			}
+
 			$this->container[ $service ] = $content;
+			$this->service_settings[$service]['public'] = $content['public'];
 		}
 
 		if($current_environment === 'DEV')
@@ -40,7 +46,9 @@ class CoolContainer
 					continue;
 				}
 				$this->container[ $service ] = $content;
+				$this->service_settings[$service]['public'] = $content['public'];
 			}
+
 		}
 
 	}
@@ -55,6 +63,11 @@ class CoolContainer
 		$this->service_store[ $a_name_of_the_service ] = $this->createService($this->container[ $a_name_of_the_service ]
 		);
 
+		if(!$this->service_settings[$a_name_of_the_service]['public'])
+		{
+			throw new ServiceNotAvailableToPublicAccessException('The Service cannot be provided por public access.');
+		}
+		
 		return $this->service_store[ $a_name_of_the_service ];
 	}
 
