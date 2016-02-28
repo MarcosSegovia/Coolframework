@@ -34,6 +34,14 @@ class CoolContainer
 
 			$this->container[ $service ] = $content;
 			$this->service_settings[$service]['public'] = $content['public'];
+
+			if(isset($content['tags']))
+			{
+				foreach($content['tags'] as $tag)
+				{
+					$this->service_settings[$service]['tags'][] = $tag;
+				}
+			}
 		}
 
 		if($current_environment === 'DEV')
@@ -47,6 +55,14 @@ class CoolContainer
 				}
 				$this->container[ $service ] = $content;
 				$this->service_settings[$service]['public'] = $content['public'];
+
+				if(isset($content['tags']))
+				{
+					foreach($content['tags'] as $tag)
+					{
+						$this->service_settings[$service]['tags'][] = $tag;
+					}
+				}
 			}
 
 		}
